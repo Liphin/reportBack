@@ -8,6 +8,7 @@
 
 .idea/*
 ViewCoder.iml
+package.json
 beanson_rush_01.iml
 meta/*
 out/*
