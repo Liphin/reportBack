@@ -1,5 +1,7 @@
 package example.operation.impl.common;
 
+import example.tool.common.Assemble;
+import example.tool.util.MybatisUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import example.operation.entity.response.ResponseData;
@@ -97,6 +99,32 @@ public class CommonService {
             }
         }
         return status;
+    }
+
+
+    /**
+     * 封装请求处理的包装逻辑，使更聚焦业务逻辑重点
+     * @param toCommit 是否提交数据库操作
+     * @param commonImpl 回调函数实现
+     * @return
+     */
+    public static ResponseData simpleImplOpt(boolean toCommit, CommonImpl commonImpl){
+        ResponseData responseData = new ResponseData(StatusCode.ERROR.getValue());
+        SqlSession sqlSession = MybatisUtils.getSession();
+        String message = "";
+        try {
+            //执行回调函数
+            commonImpl.run(responseData, sqlSession);
+
+        } catch (Exception e) {
+            message = "sys error";
+            CommonService.logger.error(message, e);
+            Assemble.responseErrorSetting(responseData, 500, message);
+
+        } finally {
+            CommonService.databaseCommitClose(sqlSession, responseData, toCommit);
+        }
+        return responseData;
     }
 
 }

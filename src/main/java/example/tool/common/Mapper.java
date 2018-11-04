@@ -5,18 +5,34 @@ package example.tool.common;
  */
 public class Mapper {
 
-    //project表的数据库操作mapper*******************************************************************
+    // ********************** reportinfo 表 mapper**************************************
     //select
     public static final String EXAMPLE_SELECT = "exampleSelect";
 
     //insert
-    public static final String EXAMPLE_INSERT = "exampleInsert";
+    public static final String INSERT_NEW_REPORTINFO = "insertNewReportInfo";
 
     //delete
     public static final String EXAMPLE_DELETE = "exampleDelete";
 
     //update
     public static final String EXAMPLE_UPDATE = "exampleUpdate";
+
+
+
+
+    // ********************** resource 表 mapper****************************************
+    //select
+    //public static final String EXAMPLE_SELECT = "exampleSelect";
+
+    //insert
+    public static final String INSERT_NEW_RESOURCE = "insertNewResource";
+
+    //delete
+    //public static final String EXAMPLE_DELETE = "exampleDelete";
+
+    //update
+    //public static final String EXAMPLE_UPDATE = "exampleUpdate";
 
 }
 

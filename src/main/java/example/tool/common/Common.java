@@ -20,4 +20,8 @@ public class Common {
     public static String RETURN_TEXT_HTML = "text/html;charset=UTF-8";
     public static String RETURN_JSON = "application/json";
 
+    //上传的资源类型
+    public static Integer IMG_TYPE = 1;
+    public static Integer VOICE_TYPE = 2;
+
 }

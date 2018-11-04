@@ -1,6 +1,9 @@
 package example;
 
 import com.alibaba.fastjson.JSON;
+import example.operation.entity.response.ResponseData;
+import example.operation.impl.report.ReportOpt;
+import example.tool.parser.text.TextData;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -43,7 +46,11 @@ public class BackAccess {
             Map<String, Object> map = FormData.getParam(msg);
             BackAccess.logger.debug("come to netty test link");
             httpResponse(ctx, msg, JSON.toJSONString("hello world 1"));
-
+        }
+        //用户提交举报信息
+        if (uri.equals("/submitReportInfo")) {
+            ResponseData response = ReportOpt.submitReportInfo(msg);
+            httpResponse(ctx, msg, response);
         }
         //若尚未消费该事件，则返回false
         else {
