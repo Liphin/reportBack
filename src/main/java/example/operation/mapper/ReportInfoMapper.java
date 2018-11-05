@@ -13,7 +13,7 @@ public interface ReportInfoMapper {
 
     /******************** select ***********************/
     //根据openid获取该用户的全部举报数据
-    @Select("select * from reportinfo where openid=#{openid}")
+    @Select("select * from reportinfo where openid=#{openid} order by timestamp desc ")
     public List<ReportInfo> getReportItems(String openid);
 
 
