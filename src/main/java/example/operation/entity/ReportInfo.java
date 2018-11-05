@@ -13,9 +13,12 @@ public class ReportInfo {
     private String name;
     private String contact;
     private String content;
+    private int realm;
     private List<String> pictures;
     private List<String> recorder;
     private String timestamp;
+    private int status;
+    private String comment;
     private String update_time;
 
     public ReportInfo() {
@@ -77,6 +80,30 @@ public class ReportInfo {
         this.recorder = recorder;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public int getRealm() {
+        return realm;
+    }
+
+    public void setRealm(int realm) {
+        this.realm = realm;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     public String getTimestamp() {
         return timestamp;
     }
@@ -101,9 +128,12 @@ public class ReportInfo {
                 ", name='" + name + '\'' +
                 ", contact='" + contact + '\'' +
                 ", content='" + content + '\'' +
+                ", realm='" + realm + '\'' +
                 ", pictures=" + pictures +
                 ", recorder=" + recorder +
                 ", timestamp='" + timestamp + '\'' +
+                ", status=" + status +
+                ", comment='" + comment + '\'' +
                 ", update_time='" + update_time + '\'' +
                 '}';
     }

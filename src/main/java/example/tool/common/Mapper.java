@@ -7,7 +7,7 @@ public class Mapper {
 
     // ********************** reportinfo 表 mapper**************************************
     //select
-    public static final String EXAMPLE_SELECT = "exampleSelect";
+    public static final String GET_REPORT_ITEMS = "getReportItems";
 
     //insert
     public static final String INSERT_NEW_REPORTINFO = "insertNewReportInfo";
@@ -23,7 +23,7 @@ public class Mapper {
 
     // ********************** resource 表 mapper****************************************
     //select
-    //public static final String EXAMPLE_SELECT = "exampleSelect";
+    public static final String GET_RESOURCE_IMG_AND_VOICE = "getReportImgAndVoice";
 
     //insert
     public static final String INSERT_NEW_RESOURCE = "insertNewResource";

@@ -5,14 +5,16 @@ package example.operation.mapper;
  */
 import example.operation.entity.Resource;
 import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 //@CacheNamespace(flushInterval = 3000)
 
 public interface ResourceMapper {
 
     /******************** select ***********************/
-//    //根据user_id获得该user的全部信息
-//    @Select("select * from user where id=#{user_id}")
-//    public Object selectExample(int user_id);
+    //根据timestamp获取该举报消息的图片和音频资源
+    @Select("select * from resource where report_timestamp=#{timestamp}")
+    public List<Resource> getReportImgAndVoice(String timestamp);
 
 
     /******************** insert ***********************/

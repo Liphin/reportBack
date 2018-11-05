@@ -52,6 +52,16 @@ public class BackAccess {
             ResponseData response = ReportOpt.submitReportInfo(msg);
             httpResponse(ctx, msg, response);
         }
+        //获取该用户举报的消息记录
+        if (uri.equals("/getReportItems")) {
+            ResponseData response = ReportOpt.getReportItems(msg);
+            httpResponse(ctx, msg, response);
+        }
+        //获取提交报告的图片和音频
+        if (uri.equals("/getReportImgAndVoice")) {
+            ResponseData response = ReportOpt.getReportImgAndVoice(msg);
+            httpResponse(ctx, msg, response);
+        }
         //若尚未消费该事件，则返回false
         else {
             messagePurchase = false;

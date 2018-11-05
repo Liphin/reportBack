@@ -24,4 +24,8 @@ public class Common {
     public static Integer IMG_TYPE = 1;
     public static Integer VOICE_TYPE = 2;
 
+    //传递过来的字段
+    public static String OPENID = "openid";
+    public static String TIMESTAMP = "timestamp";
+
 }

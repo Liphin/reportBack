@@ -12,7 +12,9 @@ import example.tool.common.Mapper;
 import example.tool.parser.text.TextData;
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by Administrator on 2018/11/4.
@@ -52,4 +54,43 @@ public class ReportOpt {
             }
         });
     }
+
+
+    /**
+     * 获取该用户举报的消息记录
+     * @param msg
+     * @return
+     */
+    public static ResponseData getReportItems(Object msg){
+        return CommonService.simpleImplOpt(false, (responseData, sqlSession) -> {
+            //获取数据
+            String text = TextData.getText(msg);
+            Map<String, Object> map = JSON.parseObject(text);
+            String openid = (String) map.get(Common.OPENID);
+
+            //查询并返回数据
+            List<ReportInfo> reportInfos = sqlSession.selectList(Mapper.GET_REPORT_ITEMS, openid);
+            Assemble.responseSuccessSetting(responseData, reportInfos);
+        });
+    }
+
+
+    /**
+     * 获取该消息体的图片和声音信息
+     * @param msg
+     * @return
+     */
+    public static ResponseData getReportImgAndVoice(Object msg){
+        return CommonService.simpleImplOpt(false, (responseData, sqlSession) -> {
+            //获取报告timestamp消息体
+            String text = TextData.getText(msg);
+            Map<String, Object> map = JSON.parseObject(text);
+            String timestamp = (String) map.get(Common.TIMESTAMP);
+
+            //根据消息体的timestamp获取图片和音频资源
+            List<Resource> list = sqlSession.selectList(Mapper.GET_RESOURCE_IMG_AND_VOICE,timestamp);
+            Assemble.responseSuccessSetting(responseData, list);
+        });
+    }
+
 }

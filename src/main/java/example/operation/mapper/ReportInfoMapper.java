@@ -5,20 +5,22 @@ package example.operation.mapper;
  */
 import example.operation.entity.ReportInfo;
 import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 //@CacheNamespace(flushInterval = 3000)
 
 public interface ReportInfoMapper {
 
     /******************** select ***********************/
-    //根据user_id获得该user的全部信息
-//    @Select("select * from user where id=#{user_id}")
-//    public Object selectExample(int user_id);
+    //根据openid获取该用户的全部举报数据
+    @Select("select * from reportinfo where openid=#{openid}")
+    public List<ReportInfo> getReportItems(String openid);
 
 
     /******************** insert ***********************/
     //插入新的举报消息到数据库
-    @Insert("insert into reportinfo(openid, name, contact, content, timestamp) " +
-            "values(#{openid}, #{name}, #{contact}, #{content}, #{timestamp})")
+    @Insert("insert into reportinfo(openid, name, contact, content, timestamp, realm) " +
+            "values(#{openid}, #{name}, #{contact}, #{content}, #{timestamp}, #{realm})")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     public int insertNewReportInfo(ReportInfo reportInfo);
 
