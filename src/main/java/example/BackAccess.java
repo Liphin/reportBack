@@ -40,6 +40,7 @@ public class BackAccess {
 
         //记录并返回消息体是否被消费了
         boolean messagePurchase = true;
+        //logger.debug("come to nonCrossVerify");
 
         /* **************************************************************/
         if (uri.equals("/netty1")) {
@@ -80,6 +81,7 @@ public class BackAccess {
     public static boolean nonLoginAccess(HttpRequest request, Object msg, ChannelHandlerContext ctx) {
         //获取uri数据
         String uri = request.uri();
+        //logger.debug("come to nonLoginAccess");
 
         //记录并返回消息体是否被消费了
         boolean messagePurchase = true;
@@ -109,6 +111,7 @@ public class BackAccess {
     public static void loginAccess(HttpRequest request, Object msg, ChannelHandlerContext ctx) {
         //获取uri数据
         String uri = request.uri();
+        //logger.debug("come to loginAccess");
 
         /* **************************************************************/
         /*测试专区*/
@@ -118,9 +121,9 @@ public class BackAccess {
             httpResponse(ctx, msg, JSON.toJSONString("hello world 3"));
 
         } else {
-            String message = "server do not serve such request: " + uri;
-            httpResponse(ctx, msg, message);
-            BackAccess.logger.debug(message);
+//            String message = "server do not serve such request: " + uri;
+//            httpResponse(ctx, msg, message);
+//            BackAccess.logger.debug(message);
         }
     }
 
@@ -137,7 +140,6 @@ public class BackAccess {
         response.headers().set(CONTENT_TYPE, Common.RETURN_JSON);
         commonResponse(ctx, msg, response);
         BackAccess.logger.debug("Return Response Data: \n" + dataBack.toString());
-        return;
     }
 
 
@@ -152,7 +154,6 @@ public class BackAccess {
         response.headers().set(CONTENT_TYPE, Common.RETURN_TEXT_HTML);
         commonResponse(ctx, msg, response);
         BackAccess.logger.debug("Return html pure data response");
-        return;
     }
 
 
