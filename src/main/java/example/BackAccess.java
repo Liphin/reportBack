@@ -137,6 +137,7 @@ public class BackAccess {
         response.headers().set(CONTENT_TYPE, Common.RETURN_JSON);
         commonResponse(ctx, msg, response);
         BackAccess.logger.debug("Return Response Data: \n" + dataBack.toString());
+        return;
     }
 
 
@@ -151,6 +152,7 @@ public class BackAccess {
         response.headers().set(CONTENT_TYPE, Common.RETURN_TEXT_HTML);
         commonResponse(ctx, msg, response);
         BackAccess.logger.debug("Return html pure data response");
+        return;
     }
 
 
