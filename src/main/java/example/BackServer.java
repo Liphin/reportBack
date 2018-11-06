@@ -34,6 +34,7 @@ public class BackServer {
     public static void main(String[] args) throws Exception {
         // Configure SSL.
         final SslContext sslCtx;
+        logger.debug("--------- ssl setting ----" + SSL);
         if (SSL) {
             //SelfSignedCertificate ssc = new SelfSignedCertificate();
             //sslCtx = SslContextBuilder.forServer(ssc.certificate(), ssc.privateKey()).build();
@@ -41,6 +42,7 @@ public class BackServer {
             File cert = new File("/root/ca/https/cert-1541484604580_liphin.com.crt");
             File key = new File("/root/ca/https/cert-1541484604580_liphin.com.key");
             sslCtx = SslContextBuilder.forServer(cert, key).build();
+
         } else {
             sslCtx = null;
         }

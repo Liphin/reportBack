@@ -30,6 +30,9 @@ public class BackInitializer extends ChannelInitializer<SocketChannel> {
         if (sslCtx != null) {
             logger.debug("--------------use ssl model -------------");
             p.addLast(sslCtx.newHandler(ch.alloc()));
+
+        } else {
+            logger.debug("--------------use simple model -------------");
         }
         p.addLast(new HttpServerCodec());
 
@@ -43,7 +46,7 @@ public class BackInitializer extends ChannelInitializer<SocketChannel> {
         * 在websocket握手阶段进行验证等操作（ping,pong,close事件），
         * 对于文本和二进制数据会传递到管道流中其他handler中
         */
-        p.addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH, null, true));
+        //p.addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH, null, true));
 
         /*
         *  deal with data transfer after websocket channel build
