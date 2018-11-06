@@ -29,7 +29,7 @@ public class BackServer {
     static final Logger logger = LoggerFactory.getLogger(BackServer.class);
 
     static final boolean SSL = true; //配置是否为SSL方式
-    static final int PORT = Integer.parseInt(System.getProperty("port", SSL? "8082" : "8082"));
+    static final int PORT = 8082;
 
     public static void main(String[] args) throws Exception {
         // Configure SSL.

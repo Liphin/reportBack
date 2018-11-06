@@ -10,8 +10,11 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.ssl.SslContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BackInitializer extends ChannelInitializer<SocketChannel> {
+    static final Logger logger = LoggerFactory.getLogger(BackInitializer.class);
 
     private final SslContext sslCtx;
     private static final String WEBSOCKET_PATH = "/websocket";
@@ -25,6 +28,7 @@ public class BackInitializer extends ChannelInitializer<SocketChannel> {
         //System.out.println("b");
         ChannelPipeline p = ch.pipeline();
         if (sslCtx != null) {
+            logger.debug("--------------use ssl model -------------");
             p.addLast(sslCtx.newHandler(ch.alloc()));
         }
         p.addLast(new HttpServerCodec());
