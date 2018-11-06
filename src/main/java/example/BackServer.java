@@ -18,6 +18,8 @@ import io.netty.handler.ssl.util.SelfSignedCertificate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+
 /**
  * An HTTP server that sends back the content of the received HTTP request
  * in a pretty plaintext form.
@@ -25,15 +27,20 @@ import org.slf4j.LoggerFactory;
 
 public class BackServer {
     static final Logger logger = LoggerFactory.getLogger(BackServer.class);
-    static final boolean SSL = System.getProperty("ssl") != null;
-    static final int PORT = Integer.parseInt(System.getProperty("port", SSL? "8443" : "8082"));
+
+    static final boolean SSL = true; //配置是否为SSL方式
+    static final int PORT = Integer.parseInt(System.getProperty("port", SSL? "8082" : "8082"));
 
     public static void main(String[] args) throws Exception {
         // Configure SSL.
         final SslContext sslCtx;
         if (SSL) {
-            SelfSignedCertificate ssc = new SelfSignedCertificate();
-            sslCtx = SslContextBuilder.forServer(ssc.certificate(), ssc.privateKey()).build();
+            //SelfSignedCertificate ssc = new SelfSignedCertificate();
+            //sslCtx = SslContextBuilder.forServer(ssc.certificate(), ssc.privateKey()).build();
+
+            File cert = new File("/root/ca/https/cert-1541484604580_liphin.com.crt");
+            File key = new File("/root/ca/https/cert-1541484604580_liphin.com.key");
+            sslCtx = SslContextBuilder.forServer(cert, key).build();
         } else {
             sslCtx = null;
         }
