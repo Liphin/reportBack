@@ -3,7 +3,6 @@ package example;
 import com.alibaba.fastjson.JSON;
 import example.operation.entity.response.ResponseData;
 import example.operation.impl.report.ReportOpt;
-import example.tool.parser.text.TextData;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;

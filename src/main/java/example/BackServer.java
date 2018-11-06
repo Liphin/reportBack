@@ -14,19 +14,10 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
-import io.netty.handler.ssl.util.SelfSignedCertificate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.net.ssl.SSLContext;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.security.KeyStore;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * An HTTP server that sends back the content of the received HTTP request
@@ -34,26 +25,22 @@ import java.util.List;
  */
 
 public class BackServer {
-    static final Logger logger = LoggerFactory.getLogger(BackServer.class);
-
-    static final boolean SSL = true; //配置是否为SSL方式
-    static final int PORT = 8082;
+    private static final Logger logger = LoggerFactory.getLogger(BackServer.class);
+    private static final boolean SSL = true; //配置是否为SSL方式
+    private static final int PORT = 8082;
 
     public static void main(String[] args) throws Exception {
         // Configure SSL.
         final SslContext sslCtx;
-        logger.debug("--------- ssl setting ----" + SSL);
         if (SSL) {
-            //SelfSignedCertificate ssc = new SelfSignedCertificate();
-            //sslCtx = SslContextBuilder.forServer(ssc.certificate(), ssc.privateKey()).build();
+            // 1、阿里云下载的node证书把key和crt的后缀名都改成pem为后缀名
+            // 2、把原来的key文件在Linux中进行转换： openssl pkcs8 -topk8 -nocrypt -in key_origin.pem -out key.pem
+            // File cert = new File("G:/SoftwareOutSourcing/report_prod/ca/Others/cert.pem");
+            // File key = new File("G:/SoftwareOutSourcing/report_prod/ca/Others/key1.pem");
 
-            File cert = new File("/root/ca/https/others/cert.pem");
-            File key = new File("/root/ca/https/others/key1.pem");
-
-//            File cert = new File("G:/SoftwareOutSourcing/report_prod/ca/Others/cert.pem");
-//            File key = new File("G:/SoftwareOutSourcing/report_prod/ca/Others/key1.pem");
+            File cert = new File("/root/ca/https/netty/cert.pem");
+            File key = new File("/root/ca/https/netty/key.pem");
             sslCtx = SslContextBuilder.forServer(cert, key, null).build();
-
 
         } else {
             sslCtx = null;
