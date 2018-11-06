@@ -18,7 +18,15 @@ import io.netty.handler.ssl.util.SelfSignedCertificate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.net.ssl.SSLContext;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.security.KeyStore;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An HTTP server that sends back the content of the received HTTP request
@@ -39,9 +47,13 @@ public class BackServer {
             //SelfSignedCertificate ssc = new SelfSignedCertificate();
             //sslCtx = SslContextBuilder.forServer(ssc.certificate(), ssc.privateKey()).build();
 
-            File cert = new File("/root/ca/https/cert-1541484604580_liphin.com.crt");
-            File key = new File("/root/ca/https/cert-1541484604580_liphin.com.key");
-            sslCtx = SslContextBuilder.forServer(cert, key).build();
+            File cert = new File("/root/ca/https/others/cert.pem");
+            File key = new File("/root/ca/https/others/key1.pem");
+
+//            File cert = new File("G:/SoftwareOutSourcing/report_prod/ca/Others/cert.pem");
+//            File key = new File("G:/SoftwareOutSourcing/report_prod/ca/Others/key1.pem");
+            sslCtx = SslContextBuilder.forServer(cert, key, null).build();
+
 
         } else {
             sslCtx = null;
