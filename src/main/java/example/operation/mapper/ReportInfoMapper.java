@@ -13,14 +13,21 @@ public interface ReportInfoMapper {
 
     /******************** select ***********************/
     //根据openid获取该用户的全部举报数据
-    @Select("select * from reportinfo where openid=#{openid} order by timestamp desc ")
+    @Select("select * from reportinfo where openid=#{openid} order by create_time desc ")
     public List<ReportInfo> getReportItems(String openid);
 
+    //根据openid获取该用户的全部举报数据
+    @Select("select * from reportinfo where create_time<#{create_time} order by create_time desc limit 120")
+    public List<ReportInfo> getRangeReport(String create_time);
+
+    //获取全部的动态消息条目的数目
+    @Select("select count(*) from reportinfo")
+    public int getReportInfoNum();
 
     /******************** insert ***********************/
     //插入新的举报消息到数据库
-    @Insert("insert into reportinfo(openid, name, contact, content, timestamp, realm) " +
-            "values(#{openid}, #{name}, #{contact}, #{content}, #{timestamp}, #{realm})")
+    @Insert("insert into reportinfo(openid, name, contact, content, timestamp, realm, create_time) " +
+            "values(#{openid}, #{name}, #{contact}, #{content}, #{timestamp}, #{realm}, #{create_time})")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     public int insertNewReportInfo(ReportInfo reportInfo);
 

@@ -17,7 +17,6 @@ public class GlobalConfig {
 
     private static Logger logger = LoggerFactory.getLogger(GlobalConfig.class);
     private final static String GENERAL_CONFIG = "/config/general.properties";
-    private final static String TARGET_ENV = "TARGET_ENV";
     private static Properties props = new Properties();
     private static int cores = Runtime.getRuntime().availableProcessors();
     private static String targetEnvironment;
@@ -27,7 +26,7 @@ public class GlobalConfig {
         InputStream inputStream = null;
         try {
             //从Jenkins中获取设置的目标environment
-            targetEnvironment = System.getenv(TARGET_ENV);
+            targetEnvironment = System.getenv(Common.TARGET_ENV);
             if (!CommonService.checkNotNull(targetEnvironment)) {
                 targetEnvironment = Common.DEV_ENVIRONMENT;
             }

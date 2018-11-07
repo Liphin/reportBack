@@ -47,6 +47,7 @@ public class BackAccess {
             BackAccess.logger.debug("come to netty test link");
             httpResponse(ctx, msg, JSON.toJSONString("hello world 1"));
         }
+        //小程序端 API ---------------------------------------------------------
         //用户提交举报信息
         if (uri.equals("/submitReportInfo")) {
             ResponseData response = ReportOpt.submitReportInfo(msg);
@@ -62,6 +63,19 @@ public class BackAccess {
             ResponseData response = ReportOpt.getReportImgAndVoice(msg);
             httpResponse(ctx, msg, response);
         }
+
+        //PC端 API ---------------------------------------------------------
+        //登录界面操作
+        if (uri.equals("/managerLogin")) {
+            ResponseData response = ReportOpt.managerLogin(msg);
+            httpResponse(ctx, msg, response);
+        }
+        //获取分页的report信息
+        if (uri.equals("/getRangeReport")) {
+            ResponseData response = ReportOpt.getRangeReport(msg);
+            httpResponse(ctx, msg, response);
+        }
+
         //若尚未消费该事件，则返回false
         else {
             messagePurchase = false;

@@ -60,5 +60,6 @@
         <!--类的话查找全类名 需要用.标识-->
         <mapper class="example.operation.mapper.ReportInfoMapper"/>
         <mapper class="example.operation.mapper.ResourceMapper"/>
+        <mapper class="example.operation.mapper.ManagerMapper"/>
     </mappers>
 </configuration>

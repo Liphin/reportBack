@@ -19,6 +19,7 @@ public class ReportInfo {
     private String timestamp;
     private int status;
     private String comment;
+    private String create_time;
     private String update_time;
 
     public ReportInfo() {
@@ -112,6 +113,14 @@ public class ReportInfo {
         this.timestamp = timestamp;
     }
 
+    public String getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
+    }
+
     public String getUpdate_time() {
         return update_time;
     }
@@ -128,12 +137,13 @@ public class ReportInfo {
                 ", name='" + name + '\'' +
                 ", contact='" + contact + '\'' +
                 ", content='" + content + '\'' +
-                ", realm='" + realm + '\'' +
+                ", realm=" + realm +
                 ", pictures=" + pictures +
                 ", recorder=" + recorder +
                 ", timestamp='" + timestamp + '\'' +
                 ", status=" + status +
                 ", comment='" + comment + '\'' +
+                ", create_time='" + create_time + '\'' +
                 ", update_time='" + update_time + '\'' +
                 '}';
     }

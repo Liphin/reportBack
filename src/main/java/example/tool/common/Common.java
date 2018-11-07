@@ -14,6 +14,7 @@ public class Common {
     public static String DEV_ENVIRONMENT = "dev"; //测试环境
     public static String PROD_ENVIRONMENT = "prod"; //生产环境
     public static String UTF8 = "UTF-8";
+    public static String TARGET_ENV = "TARGET_ENV";
     public static String SETTING_FILES = "com.viewcoder.setting.files"; //设定目标环境下的文件
 
     //数据返回设置
@@ -27,5 +28,7 @@ public class Common {
     //传递过来的字段
     public static String OPENID = "openid";
     public static String TIMESTAMP = "timestamp";
+    public static String CREATE_TIME = "create_time";
+
 
 }
