@@ -53,9 +53,9 @@ public class SqlProvider {
 
         //根据搜索条件进行不同的搜索
         if (reportType == 5) {
-            stringBuilder.append("select * from reportinfo where realm=(0,1,2,3,4) and (create_time >= " + startDate + " and create_time <= " + endDate + ") order by create_time desc");
+            stringBuilder.append("select * from reportinfo where (create_time >= '" + startDate + "' and create_time <= '" + endDate + "') order by create_time desc");
         } else {
-            stringBuilder.append("select * from reportinfo where realm=" + reportType + " and (create_time >= " + startDate + " and create_time <= " + endDate + ") order by create_time desc");
+            stringBuilder.append("select * from reportinfo where realm=" + reportType + " and (create_time >= '" + startDate + "' and create_time <= '" + endDate + "') order by create_time desc");
         }
 
         return stringBuilder.toString();
