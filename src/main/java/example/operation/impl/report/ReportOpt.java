@@ -134,7 +134,6 @@ public class ReportOpt {
         return CommonService.simpleImplOpt(false, (responseData, sqlSession) -> {
             ReportInfo reportInfo = (ReportInfo) FormData.getParam(msg, ReportInfo.class);
             List<ReportInfo> list = sqlSession.selectList(Mapper.SEARCH_REPORT_LIST, reportInfo);
-            int totalNum = sqlSession.selectOne(Mapper.GET_REPORT_INFO_NUM);
             Assemble.responseSuccessSetting(responseData, list);
         });
     }
