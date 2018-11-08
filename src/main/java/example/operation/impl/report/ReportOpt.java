@@ -132,8 +132,8 @@ public class ReportOpt {
      */
     public static ResponseData searchReportList(Object msg){
         return CommonService.simpleImplOpt(false, (responseData, sqlSession) -> {
-            ReportInfo reportInfo = (ReportInfo) FormData.getParam(msg, ReportInfo.class);
-            List<ReportInfo> list = sqlSession.selectList(Mapper.SEARCH_REPORT_LIST, reportInfo);
+            Map<String, Object> map = FormData.getParam(msg);
+            List<ReportInfo> list = sqlSession.selectList(Mapper.SEARCH_REPORT_LIST, map);
             Assemble.responseSuccessSetting(responseData, list);
         });
     }
