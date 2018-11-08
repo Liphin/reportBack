@@ -10,6 +10,7 @@ public class Mapper {
     public static final String GET_REPORT_ITEMS = "getReportItems";
     public static final String GET_RANGE_REPORT = "getRangeReport";
     public static final String GET_REPORT_INFO_NUM = "getReportInfoNum";
+    public static final String SEARCH_REPORT_LIST = "searchReportList";
 
     //insert
     public static final String INSERT_NEW_REPORTINFO = "insertNewReportInfo";

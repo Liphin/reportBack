@@ -75,6 +75,11 @@ public class BackAccess {
             ResponseData response = ReportOpt.getRangeReport(msg);
             httpResponse(ctx, msg, response);
         }
+        //搜索数据
+        if (uri.equals("/searchReportList")) {
+            ResponseData response = ReportOpt.searchReportList(msg);
+            httpResponse(ctx, msg, response);
+        }
 
         //若尚未消费该事件，则返回false
         else {

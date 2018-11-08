@@ -7,6 +7,7 @@ import example.operation.entity.ReportInfo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 //@CacheNamespace(flushInterval = 3000)
 
 public interface ReportInfoMapper {
@@ -23,6 +24,10 @@ public interface ReportInfoMapper {
     //获取全部的动态消息条目的数目
     @Select("select count(*) from reportinfo")
     public int getReportInfoNum();
+
+    //获取搜索数据
+    @SelectProvider(type = SqlProvider.class, method = "searchReportList")
+    public List<ReportInfo> searchReportList(Map<String, Object> map);
 
     /******************** insert ***********************/
     //插入新的举报消息到数据库

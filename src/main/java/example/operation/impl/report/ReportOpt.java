@@ -125,6 +125,20 @@ public class ReportOpt {
         });
     }
 
+    /**
+     * 获取特定搜索数据
+     * @param msg
+     * @return
+     */
+    public static ResponseData searchReportList(Object msg){
+        return CommonService.simpleImplOpt(false, (responseData, sqlSession) -> {
+            ReportInfo reportInfo = (ReportInfo) FormData.getParam(msg, ReportInfo.class);
+            List<ReportInfo> list = sqlSession.selectList(Mapper.SEARCH_REPORT_LIST, reportInfo);
+            int totalNum = sqlSession.selectOne(Mapper.GET_REPORT_INFO_NUM);
+            Assemble.responseSuccessSetting(responseData, list);
+        });
+    }
+
 
     /**
      * 登录界面操作
