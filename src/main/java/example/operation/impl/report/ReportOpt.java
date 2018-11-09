@@ -7,31 +7,34 @@ import example.operation.entity.Resource;
 import example.operation.entity.response.ResponseData;
 import example.operation.impl.common.CommonImpl;
 import example.operation.impl.common.CommonService;
+import example.operation.impl.helper.PackFiles;
 import example.tool.common.Assemble;
 import example.tool.common.Common;
 import example.tool.common.Mapper;
 import example.tool.parser.form.FormData;
 import example.tool.parser.text.TextData;
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sun.text.resources.FormatData;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Created by Administrator on 2018/11/4.
  */
 public class ReportOpt {
 
+    private static final Logger logger = LoggerFactory.getLogger(ReportOpt.class);
 
     //********************************** 手机端的API操作 *************************************************************
+
     /**
      * 提交举报信息，并插入数据库等操作
+     *
      * @return
      */
-    public static ResponseData submitReportInfo(Object msg){
+    public static ResponseData submitReportInfo(Object msg) {
         return CommonService.simpleImplOpt(true, new CommonImpl() {
             @Override
             public void run(ResponseData responseData, SqlSession sqlSession) throws Exception {
@@ -43,18 +46,25 @@ public class ReportOpt {
 
                 //插入消息体数据
                 sqlSession.insert(Mapper.INSERT_NEW_REPORTINFO, reportInfo);
+                List<String> resourceNames = new ArrayList<>(); //装载资源名称，用于后续文件打zip包处理
 
                 //循环插入pictures数据
-                for(int i =0; i<reportInfo.getPictures().size(); i++){
+                for (int i = 0; i < reportInfo.getPictures().size(); i++) {
+                    resourceNames.add(reportInfo.getPictures().get(i)); //添加文件名到资源装载list
                     Resource resource = new Resource(reportInfo.getPictures().get(i), Common.IMG_TYPE, reportInfo.getTimestamp(), CommonService.getDateTime());
                     sqlSession.insert(Mapper.INSERT_NEW_RESOURCE, resource);
                 }
 
                 //循环插入recorder数据
-                for(int i =0; i<reportInfo.getRecorder().size(); i++){
+                for (int i = 0; i < reportInfo.getRecorder().size(); i++) {
+                    resourceNames.add(reportInfo.getRecorder().get(i)); //添加文件名到资源装载list
                     Resource resource = new Resource(reportInfo.getRecorder().get(i), Common.VOICE_TYPE, reportInfo.getTimestamp(), CommonService.getDateTime());
                     sqlSession.insert(Mapper.INSERT_NEW_RESOURCE, resource);
                 }
+
+                //打包picture和voice到zip包
+                String zipFileName = reportInfo.getOpenid() + reportInfo.getTimestamp() + Common.FILE_TYPE_ZIP;
+                new PackFiles().packFiles(zipFileName, resourceNames);
 
                 //封装返回数据
                 Assemble.responseSuccessSetting(responseData, true);
@@ -65,10 +75,11 @@ public class ReportOpt {
 
     /**
      * 获取该用户举报的消息记录
+     *
      * @param msg
      * @return
      */
-    public static ResponseData getReportItems(Object msg){
+    public static ResponseData getReportItems(Object msg) {
         return CommonService.simpleImplOpt(false, (responseData, sqlSession) -> {
             //获取数据
             String text = TextData.getText(msg);
@@ -84,10 +95,11 @@ public class ReportOpt {
 
     /**
      * 获取该消息体的图片和声音信息
+     *
      * @param msg
      * @return
      */
-    public static ResponseData getReportImgAndVoice(Object msg){
+    public static ResponseData getReportImgAndVoice(Object msg) {
         return CommonService.simpleImplOpt(false, (responseData, sqlSession) -> {
             //获取报告timestamp消息体
             String text = TextData.getText(msg);
@@ -95,26 +107,27 @@ public class ReportOpt {
             String timestamp = (String) map.get(Common.TIMESTAMP);
 
             //根据消息体的timestamp获取图片和音频资源
-            List<Resource> list = sqlSession.selectList(Mapper.GET_RESOURCE_IMG_AND_VOICE,timestamp);
+            List<Resource> list = sqlSession.selectList(Mapper.GET_RESOURCE_IMG_AND_VOICE, timestamp);
             Assemble.responseSuccessSetting(responseData, list);
         });
     }
 
 
-
     //************************************ PC端操作 *******************************************************
+
     /**
      * 获取分页的report信息
+     *
      * @param msg
      * @return
      */
-    public static ResponseData getRangeReport(Object msg){
+    public static ResponseData getRangeReport(Object msg) {
         return CommonService.simpleImplOpt(false, (responseData, sqlSession) -> {
             //获取分页create_time的值
             String createTime = FormData.getParam(msg, Common.CREATE_TIME);
 
             //根据消息体的createTime获取一定范围内的消息数据和数据总条目
-            List<ReportInfo> list = sqlSession.selectList(Mapper.GET_RANGE_REPORT,createTime);
+            List<ReportInfo> list = sqlSession.selectList(Mapper.GET_RANGE_REPORT, createTime);
             int totalNum = sqlSession.selectOne(Mapper.GET_REPORT_INFO_NUM);
 
             //装载数据到map中
@@ -128,10 +141,11 @@ public class ReportOpt {
 
     /**
      * 登录界面操作
+     *
      * @param msg
      * @return
      */
-    public static ResponseData managerLogin(Object msg){
+    public static ResponseData managerLogin(Object msg) {
         return CommonService.simpleImplOpt(false, (responseData, sqlSession) -> {
             //获取登录的信息
             Map<String, Object> map = FormData.getParam(msg);
@@ -140,10 +154,10 @@ public class ReportOpt {
             Manager manager = sqlSession.selectOne(Mapper.CHECK_MANAGER_INFO, map);
 
             //根据查询出来的manager信息是否为空包装不同的返回值
-            if(CommonService.checkNotNull(manager)){
+            if (CommonService.checkNotNull(manager)) {
                 Assemble.responseSuccessSetting(responseData, manager);
 
-            }else{
+            } else {
                 Assemble.responseErrorSetting(responseData, 400, "Manager info not found");
             }
 

@@ -31,4 +31,15 @@ public class Common {
     public static String CREATE_TIME = "create_time";
 
 
+    //配置信息字段
+    public static String REPORT_RESOURCE_BASEPATH="report.resource.basepath";
+
+    //数据类型
+    public static String FILE_TYPE_ZIP = ".zip";
+
 }
+
+
+
+
+
