@@ -41,6 +41,8 @@ public interface ReportInfoMapper {
     //测试Junit时删除新添加的user数据
 //    @Delete("delete from user where email=#{email}")
 //    public int deleteUserInDb(int user_id);
+    @Delete("delete from reportinfo where timestamp=#{timestamp}")
+    public int deleteReport(String timestamp);
 
 
     /******************** update ***********************/

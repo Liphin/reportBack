@@ -17,6 +17,9 @@ public class Mapper {
 
     //delete
     public static final String EXAMPLE_DELETE = "exampleDelete";
+    //delete
+    public static final String DELETE_REPORT = "deleteReport";
+    public static final String DELETE_RESOURCE = "deleteResource";
 
     //update
     public static final String EXAMPLE_UPDATE = "exampleUpdate";
@@ -27,6 +30,7 @@ public class Mapper {
     // ********************** resource 表 mapper****************************************
     //select
     public static final String GET_RESOURCE_IMG_AND_VOICE = "getReportImgAndVoice";
+    public static final String GET_RESOURCE_IMG_AND_VOICE_NAME = "getReportImgAndVoiceName";
 
     //insert
     public static final String INSERT_NEW_RESOURCE = "insertNewResource";

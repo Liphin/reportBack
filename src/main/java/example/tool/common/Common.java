@@ -29,6 +29,7 @@ public class Common {
     public static String OPENID = "openid";
     public static String TIMESTAMP = "timestamp";
     public static String CREATE_TIME = "create_time";
+    public static String DELETE_LIST = "deleteList";
 
 
 }

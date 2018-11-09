@@ -80,6 +80,16 @@ public class BackAccess {
             ResponseData response = ReportOpt.searchReportList(msg);
             httpResponse(ctx, msg, response);
         }
+        //删除特定数据
+        if (uri.equals("/deleteReport")) {
+            ResponseData response = ReportOpt.deleteReport(msg);
+            httpResponse(ctx, msg, response);
+        }
+        //批量删除新闻数据
+        else if (uri.equals("/deleteBatchReport")) {
+            ResponseData response = ReportOpt.deleteBatchReport(msg);
+            httpResponse(ctx, msg, response);
+        }
 
         //若尚未消费该事件，则返回false
         else {
