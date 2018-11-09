@@ -158,7 +158,6 @@ public class ReportOpt {
         return CommonService.simpleImplOpt(false, (responseData, sqlSession) -> {
             //获取登录的信息
             Map<String, Object> map = FormData.getParam(msg);
-            System.out.println("test333");
             //根据传递过来的account和password查询数据库是否有该值
             Manager manager = sqlSession.selectOne(Mapper.CHECK_MANAGER_INFO, map);
 
