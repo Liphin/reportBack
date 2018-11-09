@@ -236,7 +236,7 @@ public class ReportOpt {
      *
      * @param msg
      */
-    public static ResponseData deleteBatchReport(Object msg) {
+    public static ResponseData deleteBranchReport(Object msg) {
         return CommonService.simpleImplOpt(true, new CommonImpl() {
             @Override
             public void run(ResponseData responseData, SqlSession sqlSession) throws Exception {

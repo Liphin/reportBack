@@ -86,8 +86,8 @@ public class BackAccess {
             httpResponse(ctx, msg, response);
         }
         //批量删除新闻数据
-        if (uri.equals("/deleteBatchReport")) {
-            ResponseData response = ReportOpt.deleteBatchReport(msg);
+        if (uri.equals("/deleteBranchReport")) {
+            ResponseData response = ReportOpt.deleteBranchReport(msg);
             httpResponse(ctx, msg, response);
         }
 
