@@ -7,6 +7,7 @@ import example.operation.entity.ReportInfo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 //@CacheNamespace(flushInterval = 3000)
 
 public interface ReportInfoMapper {
@@ -24,6 +25,10 @@ public interface ReportInfoMapper {
     @Select("select count(*) from reportinfo")
     public int getReportInfoNum();
 
+    //获取搜索数据
+    @SelectProvider(type = SqlProvider.class, method = "searchReportList")
+    public List<ReportInfo> searchReportList(Map<String, Object> map);
+
     /******************** insert ***********************/
     //插入新的举报消息到数据库
     @Insert("insert into reportinfo(openid, name, contact, content, timestamp, realm, create_time) " +
@@ -36,6 +41,8 @@ public interface ReportInfoMapper {
     //测试Junit时删除新添加的user数据
 //    @Delete("delete from user where email=#{email}")
 //    public int deleteUserInDb(int user_id);
+    @Delete("delete from reportinfo where timestamp=#{timestamp}")
+    public int deleteReport(String timestamp);
 
 
     /******************** update ***********************/

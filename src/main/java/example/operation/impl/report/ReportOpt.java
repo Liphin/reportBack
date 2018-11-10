@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.text.resources.FormatData;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -25,13 +26,11 @@ import java.util.*;
  */
 public class ReportOpt {
 
-    private static final Logger logger = LoggerFactory.getLogger(ReportOpt.class);
+    private static Logger logger = LoggerFactory.getLogger(ReportOpt.class);
 
-    //********************************** 手机端的API操作 *************************************************************
-
+    //********************************** 小程序端的API操作 *************************************************************
     /**
-     * 提交举报信息，并插入数据库等操作
-     *
+     * 小程序端提交举报信息，并插入数据库等操作
      * @return
      */
     public static ResponseData submitReportInfo(Object msg) {
@@ -74,7 +73,7 @@ public class ReportOpt {
 
 
     /**
-     * 获取该用户举报的消息记录
+     * 小程序端获取该用户举报的消息记录
      *
      * @param msg
      * @return
@@ -94,7 +93,7 @@ public class ReportOpt {
 
 
     /**
-     * 获取该消息体的图片和声音信息
+     * 小程序端获取该消息体的图片和声音信息
      *
      * @param msg
      * @return
@@ -111,6 +110,8 @@ public class ReportOpt {
             Assemble.responseSuccessSetting(responseData, list);
         });
     }
+
+
 
 
     //************************************ PC端操作 *******************************************************
@@ -139,6 +140,44 @@ public class ReportOpt {
     }
 
 
+
+    /**
+     * PC端获取该消息体的图片和声音信息
+     * @param msg
+     * @return
+     */
+    public static ResponseData getReportImgAndVoiceToPC(Object msg){
+        return CommonService.simpleImplOpt(false, (responseData, sqlSession) -> {
+            //获取报告timestamp消息体
+
+            String timestamp = FormData.getParam(msg, Common.TIMESTAMP);
+
+            //根据消息体的timestamp获取图片和音频资源
+            List<Resource> list = sqlSession.selectList(Mapper.GET_RESOURCE_IMG_AND_VOICE,timestamp);
+            //装载数据到map中
+            Map<String, Object> map = new HashMap<>();
+            map.put("resource", list);
+
+            Assemble.responseSuccessSetting(responseData, map);
+        });
+    }
+
+
+
+    /**
+     * 获取特定搜索数据
+     * @param msg
+     * @return
+     */
+    public static ResponseData searchReportList(Object msg){
+        return CommonService.simpleImplOpt(false, (responseData, sqlSession) -> {
+            Map<String, Object> map = FormData.getParam(msg);
+            List<ReportInfo> list = sqlSession.selectList(Mapper.SEARCH_REPORT_LIST, map);
+            Assemble.responseSuccessSetting(responseData, list);
+        });
+    }
+
+
     /**
      * 登录界面操作
      *
@@ -149,7 +188,6 @@ public class ReportOpt {
         return CommonService.simpleImplOpt(false, (responseData, sqlSession) -> {
             //获取登录的信息
             Map<String, Object> map = FormData.getParam(msg);
-
             //根据传递过来的account和password查询数据库是否有该值
             Manager manager = sqlSession.selectOne(Mapper.CHECK_MANAGER_INFO, map);
 
@@ -164,5 +202,98 @@ public class ReportOpt {
         });
     }
 
+    /**
+     * 同时删除多条朋友圈
+     *
+     * @param msg
+     */
+    public static ResponseData deleteReport(Object msg) {
+        return CommonService.simpleImplOpt(true, new CommonImpl() {
+            @Override
+            public void run(ResponseData responseData, SqlSession sqlSession) throws Exception {
+
+                Map<String, Object> map = FormData.getParam(msg);
+                String timestamp = (String) map.get(Common.TIMESTAMP);
+
+                deleteReportOpt(sqlSession, timestamp);
+                //返回正确数据
+                Assemble.responseSuccessSetting(responseData, null);
+            }
+        });
+    }
+
+    /**
+     * 删除朋友圈数据操作
+     */
+    public static void deleteReportOpt(SqlSession sqlSession, String timestamp) throws Exception{
+
+        //获取删除的文件列表
+        //根据消息体的timestamp获取图片和音频资源
+        List<String> resourcesList = sqlSession.selectList(Mapper.GET_RESOURCE_IMG_AND_VOICE_NAME,timestamp);
+
+        //删除数据库数据
+        int deleteInfoNum = sqlSession.delete(Mapper.DELETE_REPORT, timestamp);
+        int deleteImgNum = sqlSession.delete(Mapper.DELETE_RESOURCE, timestamp);
+
+        if (deleteInfoNum > 0 && deleteImgNum > 0) {
+            //删除朋友圈封面、图片、内容数据
+//            String dynamicInfoCoverImg = GlobalConfig.getProperties(Common.DYNAMICINFOS_SYS_PATH_COVERIMG);
+//            String dynamicInfoHtmlPath = GlobalConfig.getProperties(Common.DYNAMICINFOS_SYS_PATH_HTML);
+//
+//            //删除朋友圈封面文件数据
+//            String coverImg = dynamicInfoCoverImg + timestamp + Common.SUFFIX_PNG;
+//            deleteFile(coverImg);
+//
+//            //删除朋友圈内容文件数据
+//            String htmlFile = dynamicInfoHtmlPath + timestamp + Common.SUFFIX_INDEX_HTML;
+//            deleteFile(htmlFile);
+
+            for (int index = 0; index < resourcesList.size(); index++) {
+                System.out.println(resourcesList.get(index));  //.get(index)
+//                String resourceFile=resourcesList.get(index);
+//                deleteFile(resourceFile);
+            }
+
+
+        } else {
+            String message = "delete file from database error, timestamp: " + timestamp;
+            ReportOpt.logger.warn(message);
+        }
+    }
+
+    /**
+     * 批量删除数据
+     *
+     * @param msg
+     */
+    public static ResponseData deleteBranchReport(Object msg) {
+        return CommonService.simpleImplOpt(true, new CommonImpl() {
+            @Override
+            public void run(ResponseData responseData, SqlSession sqlSession) throws Exception {
+                String listStr = (String) FormData.getParam(msg, Common.DELETE_LIST);
+                //解析Json数组数据
+                List<String> list = JSON.parseArray(listStr, String.class);
+
+                //循环传递过来的list中每个数据，并删除每条朋友圈数据
+                for (String timestamp : list) {
+                    deleteReportOpt(sqlSession, timestamp);
+                }
+                //返回正确数据
+                Assemble.responseSuccessSetting(responseData, null);
+            }
+        });
+    }
+
+    /**
+     * 删除单文件操作
+     *
+     * @param path
+     */
+    public static void deleteFile(String path) {
+        File file = new File(path);
+        if (file.exists() && file.isFile()) {
+            file.delete();
+        }
+    }
 
 }

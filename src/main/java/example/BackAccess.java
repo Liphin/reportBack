@@ -75,6 +75,26 @@ public class BackAccess {
             ResponseData response = ReportOpt.getRangeReport(msg);
             httpResponse(ctx, msg, response);
         }
+        //搜索数据
+        if (uri.equals("/searchReportList")) {
+            ResponseData response = ReportOpt.searchReportList(msg);
+            httpResponse(ctx, msg, response);
+        }
+        //删除特定数据
+        if (uri.equals("/deleteReport")) {
+            ResponseData response = ReportOpt.deleteReport(msg);
+            httpResponse(ctx, msg, response);
+        }
+        //批量删除新闻数据
+        if (uri.equals("/deleteBranchReport")) {
+            ResponseData response = ReportOpt.deleteBranchReport(msg);
+            httpResponse(ctx, msg, response);
+        }
+        //小程序端获取提交报告的图片和音频
+        if (uri.equals("/getReportImgAndVoiceToPC")) {
+            ResponseData response = ReportOpt.getReportImgAndVoiceToPC(msg);
+            httpResponse(ctx, msg, response);
+        }
 
         //若尚未消费该事件，则返回false
         else {

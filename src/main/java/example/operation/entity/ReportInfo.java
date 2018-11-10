@@ -22,6 +22,10 @@ public class ReportInfo {
     private String create_time;
     private String update_time;
 
+    private String startDate;
+    private String endDate;
+    private int type;
+
     public ReportInfo() {
     }
 
@@ -65,6 +69,14 @@ public class ReportInfo {
         this.content = content;
     }
 
+    public int getRealm() {
+        return realm;
+    }
+
+    public void setRealm(int realm) {
+        this.realm = realm;
+    }
+
     public List<String> getPictures() {
         return pictures;
     }
@@ -81,16 +93,16 @@ public class ReportInfo {
         this.recorder = recorder;
     }
 
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
     public int getStatus() {
         return status;
-    }
-
-    public int getRealm() {
-        return realm;
-    }
-
-    public void setRealm(int realm) {
-        this.realm = realm;
     }
 
     public void setStatus(int status) {
@@ -103,14 +115,6 @@ public class ReportInfo {
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
     }
 
     public String getCreate_time() {
@@ -129,6 +133,30 @@ public class ReportInfo {
         this.update_time = update_time;
     }
 
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "ReportInfo{" +
@@ -145,6 +173,9 @@ public class ReportInfo {
                 ", comment='" + comment + '\'' +
                 ", create_time='" + create_time + '\'' +
                 ", update_time='" + update_time + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", type=" + type +
                 '}';
     }
 }

@@ -16,6 +16,9 @@ public interface ResourceMapper {
     @Select("select * from resource where report_timestamp=#{timestamp}")
     public List<Resource> getReportImgAndVoice(String timestamp);
 
+    @Select("select filename from resource where report_timestamp=#{timestamp}")
+    public List<String> getReportImgAndVoiceName(String timestamp);
+
 
     /******************** insert ***********************/
     //插入新的resource数据到数据库
@@ -29,6 +32,9 @@ public interface ResourceMapper {
 //    //测试Junit时删除新添加的user数据
 //    @Delete("delete from user where email=#{email}")
 //    public int deleteUserInDb(int user_id);
+    //删除资源文件表
+    @Delete("delete from resource where report_timestamp=#{timestamp}")
+    public int deleteResource(String timestamp);
 
 
     /******************** update ***********************/

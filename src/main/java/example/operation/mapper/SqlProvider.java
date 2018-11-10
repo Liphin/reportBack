@@ -1,6 +1,10 @@
 package example.operation.mapper;
 
 
+import example.tool.common.Common;
+
+import java.util.Map;
+
 /**
  * Created by Administrator on 2018/3/12.
  */
@@ -35,6 +39,27 @@ public class SqlProvider {
 //        }
 //        return stringBuilder.toString();
 //    }
+    /**
+     * 获取待审核的朋友圈数据
+     *
+     * @param map
+     * @return
+     */
+    public String searchReportList(Map<String, Object> map) {
+        StringBuilder stringBuilder = new StringBuilder();
+        String  startDate = String.valueOf(map.get("startDate"));
+        String  endDate = String.valueOf(map.get("endDate"));
+        Integer reportType = Integer.parseInt(String.valueOf(map.get("type")));
+
+        //根据搜索条件进行不同的搜索
+        if (reportType == 5) {
+            stringBuilder.append("select * from reportinfo where (create_time >= '" + startDate + "' and create_time <= '" + endDate + "') order by create_time desc");
+        } else {
+            stringBuilder.append("select * from reportinfo where realm=" + reportType + " and (create_time >= '" + startDate + "' and create_time <= '" + endDate + "') order by create_time desc");
+        }
+
+        return stringBuilder.toString();
+    }
 
 }
 
