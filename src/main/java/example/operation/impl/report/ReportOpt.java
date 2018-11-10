@@ -61,10 +61,12 @@ public class ReportOpt {
                     sqlSession.insert(Mapper.INSERT_NEW_RESOURCE, resource);
                 }
 
-                //打包picture和voice到zip包
-                String zipFileName = reportInfo.getOpenid() + reportInfo.getTimestamp() + Common.FILE_TYPE_ZIP;
-                new PackFiles().packFiles(zipFileName, resourceNames);
-
+                //如果资源大于0则打包picture和voice到zip包
+                if(resourceNames.size()>0){
+                    String zipFileName = reportInfo.getOpenid() + reportInfo.getTimestamp() + Common.FILE_TYPE_ZIP;
+                    new PackFiles().packFiles(zipFileName, resourceNames);
+                }
+                
                 //封装返回数据
                 Assemble.responseSuccessSetting(responseData, true);
             }
