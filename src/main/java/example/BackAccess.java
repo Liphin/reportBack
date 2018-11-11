@@ -36,6 +36,14 @@ public class BackAccess {
     public static boolean nonCrossVerify(HttpRequest request, Object msg, ChannelHandlerContext ctx) {
         //获取uri数据
         String uri = request.uri();
+        logger.debug("come to nonCrossVerify"+ uri);
+        logger.debug("come to nonCrossVerify2"+ uri.equals("/getReportImgAndVoiceToPc"));
+
+//        if(uri.equals("/getReportImgAndVoiceToPc")){
+//            logger.debug("come to bingo");
+//        }else {
+//            logger.debug("come to fail");
+//        }
 
         //记录并返回消息体是否被消费了
         boolean messagePurchase = true;
@@ -49,50 +57,51 @@ public class BackAccess {
         }
         //小程序端 API ---------------------------------------------------------
         //用户提交举报信息
-        if (uri.equals("/submitReportInfo")) {
+        else if (uri.equals("/submitReportInfo")) {
             ResponseData response = ReportOpt.submitReportInfo(msg);
             httpResponse(ctx, msg, response);
         }
         //获取该用户举报的消息记录
-        if (uri.equals("/getReportItems")) {
+        else if (uri.equals("/getReportItems")) {
             ResponseData response = ReportOpt.getReportItems(msg);
             httpResponse(ctx, msg, response);
         }
-        //获取提交报告的图片和音频
-        if (uri.equals("/getReportImgAndVoice")) {
+        //小程序获取提交报告的图片和音频
+        else if (uri.equals("/getReportImgAndVoice")) {
             ResponseData response = ReportOpt.getReportImgAndVoice(msg);
             httpResponse(ctx, msg, response);
         }
 
         //PC端 API ---------------------------------------------------------
         //登录界面操作
-        if (uri.equals("/managerLogin")) {
+        else if (uri.equals("/managerLogin")) {
             ResponseData response = ReportOpt.managerLogin(msg);
             httpResponse(ctx, msg, response);
         }
         //获取分页的report信息
-        if (uri.equals("/getRangeReport")) {
+        else if (uri.equals("/getRangeReport")) {
             ResponseData response = ReportOpt.getRangeReport(msg);
             httpResponse(ctx, msg, response);
         }
         //搜索数据
-        if (uri.equals("/searchReportList")) {
+        else if (uri.equals("/searchReportList")) {
             ResponseData response = ReportOpt.searchReportList(msg);
             httpResponse(ctx, msg, response);
         }
         //删除特定数据
-        if (uri.equals("/deleteReport")) {
+        else if (uri.equals("/deleteReport")) {
             ResponseData response = ReportOpt.deleteReport(msg);
             httpResponse(ctx, msg, response);
         }
         //批量删除新闻数据
-        if (uri.equals("/deleteBranchReport")) {
+        else if (uri.equals("/deleteBranchReport")) {
             ResponseData response = ReportOpt.deleteBranchReport(msg);
             httpResponse(ctx, msg, response);
         }
-        //小程序端获取提交报告的图片和音频
-        if (uri.equals("/getReportImgAndVoiceToPC")) {
-            ResponseData response = ReportOpt.getReportImgAndVoiceToPC(msg);
+        //PC端获取提交报告的图片和音频
+        else if (uri.equals("/getReportImgAndVoiceToPc")) {
+            logger.debug("come to nonCrossOrigin3");
+            ResponseData response = ReportOpt.getReportImgAndVoiceToPc(msg);
             httpResponse(ctx, msg, response);
         }
 
@@ -100,6 +109,8 @@ public class BackAccess {
         else {
             messagePurchase = false;
         }
+        logger.debug("come to nonCrossVerify4"+ uri.equals("/getReportImgAndVoiceToPc"));
+
         return messagePurchase;
     }
 
@@ -154,9 +165,9 @@ public class BackAccess {
             httpResponse(ctx, msg, JSON.toJSONString("hello world 3"));
 
         } else {
-//            String message = "server do not serve such request: " + uri;
-//            httpResponse(ctx, msg, message);
-//            BackAccess.logger.debug(message);
+            String message = "server do not serve such request: " + uri;
+            httpResponse(ctx, msg, message);
+            BackAccess.logger.debug(message);
         }
     }
 

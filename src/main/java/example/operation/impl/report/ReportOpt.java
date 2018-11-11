@@ -66,7 +66,7 @@ public class ReportOpt {
                     String zipFileName = reportInfo.getOpenid() + reportInfo.getTimestamp() + Common.FILE_TYPE_ZIP;
                     new PackFiles().packFiles(zipFileName, resourceNames);
                 }
-                
+
                 //封装返回数据
                 Assemble.responseSuccessSetting(responseData, true);
             }
@@ -148,10 +148,10 @@ public class ReportOpt {
      * @param msg
      * @return
      */
-    public static ResponseData getReportImgAndVoiceToPC(Object msg){
+    public static ResponseData getReportImgAndVoiceToPc(Object msg){
         return CommonService.simpleImplOpt(false, (responseData, sqlSession) -> {
             //获取报告timestamp消息体
-
+            logger.debug("come 1");
             String timestamp = FormData.getParam(msg, Common.TIMESTAMP);
 
             //根据消息体的timestamp获取图片和音频资源
