@@ -100,7 +100,6 @@ public class BackAccess {
         }
         //PC端获取提交报告的图片和音频
         else if (uri.equals("/getReportImgAndVoiceToPc")) {
-            logger.debug("come to nonCrossOrigin3");
             ResponseData response = ReportOpt.getReportImgAndVoiceToPc(msg);
             httpResponse(ctx, msg, response);
         }
@@ -109,7 +108,6 @@ public class BackAccess {
         else {
             messagePurchase = false;
         }
-        logger.debug("come to nonCrossVerify4"+ uri.equals("/getReportImgAndVoiceToPc"));
 
         return messagePurchase;
     }
