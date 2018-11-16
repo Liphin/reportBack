@@ -1,8 +1,11 @@
 package example.operation.mapper;
 
 
+import example.operation.impl.common.CommonService;
 import example.tool.common.Common;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -60,6 +63,34 @@ public class SqlProvider {
 
         return stringBuilder.toString();
     }
+
+
+
+    /**
+     * 动态插入测试数据到reportInfo表
+     *
+     * @return
+     */
+    public String insertTestDataToReportInfo(Integer num) {
+        String title = "测试title数据";
+        StringBuilder stringBuilder = new StringBuilder();
+        //日期数据初始化
+        Date day = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Long timestamp = Long.parseLong(CommonService.getTimeStamp());
+        stringBuilder.append("insert into reportinfo (openid, name, contact, content, timestamp, create_time) values");
+        for (int i = 0; i < num; i++) {
+            day.setTime(day.getTime() - i * 1000);
+            stringBuilder.append(" (");
+            stringBuilder.append("'ok_7q4r_oTsM00R7zVvbP7w525BQ' , '张斌' , '18316433415',  'daladala', '" + (timestamp + i) + "' , '" + df.format(day) + "'");
+            stringBuilder.append(")");
+            if (i < (num - 1)) {
+                stringBuilder.append(",");
+            }
+        }
+        return stringBuilder.toString();
+    }
+
 
 }
 

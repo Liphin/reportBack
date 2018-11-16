@@ -1,3 +1,7 @@
+import example.tool.common.Mapper;
+import example.tool.util.MybatisUtils;
+import org.apache.ibatis.session.SqlSession;
+
 import java.io.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -57,6 +61,27 @@ public class Test {
 
         zos.closeEntry();
         fis.close();
+    }
+
+
+    /**
+     * 插入测试数据到举报信息表中
+     */
+    @org.junit.Test
+    public void insertTestDataToReportInfo() {
+        int num = 180;
+        SqlSession sqlSession = MybatisUtils.getSession();
+        try {
+            int influenceNum = sqlSession.insert(Mapper.INSERT_TEST_DATA_TO_REPORT_INFO, num);
+            System.out.println("influence num : " + influenceNum);
+            sqlSession.commit();
+
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }finally {
+            sqlSession.close();
+        }
     }
 
 }

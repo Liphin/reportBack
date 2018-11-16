@@ -36,6 +36,10 @@ public interface ReportInfoMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     public int insertNewReportInfo(ReportInfo reportInfo);
 
+    //插入测试数据操作
+    @InsertProvider(type = SqlProvider.class, method = "insertTestDataToReportInfo")
+    public int insertTestDataToReportInfo(Integer num);
+
 
     /******************** delete ***********************/
     //测试Junit时删除新添加的user数据

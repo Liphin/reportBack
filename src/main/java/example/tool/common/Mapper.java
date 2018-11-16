@@ -14,6 +14,7 @@ public class Mapper {
 
     //insert
     public static final String INSERT_NEW_REPORTINFO = "insertNewReportInfo";
+    public static final String INSERT_TEST_DATA_TO_REPORT_INFO = "insertTestDataToReportInfo";
 
     //delete
     public static final String EXAMPLE_DELETE = "exampleDelete";
