@@ -46,8 +46,8 @@ public interface ReportInfoMapper {
 
 
     /******************** update ***********************/
-    //更新用户个人信息
-//    @Update("update user set user_name=#{user_name},role=#{role},phone=#{phone},nation=#{nation},portrait=#{portrait} where id=#{id}")
-//    public int updateUserInfo(int user_id);
+    //更新阅读状态信息
+    @Update("update reportinfo set view=2 where timestamp=#{timestamp} ")
+    public int updateViewStatus(String timestamp);
 
 }

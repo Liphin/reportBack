@@ -22,7 +22,7 @@ public class Mapper {
     public static final String DELETE_RESOURCE = "deleteResource";
 
     //update
-    public static final String EXAMPLE_UPDATE = "exampleUpdate";
+    public static final String UPDATE_VIEW_STATUS = "updateViewStatus";
 
 
 

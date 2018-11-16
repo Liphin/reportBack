@@ -103,6 +103,11 @@ public class BackAccess {
             ResponseData response = ReportOpt.getReportImgAndVoiceToPc(msg);
             httpResponse(ctx, msg, response);
         }
+        //PC端异步更新诉讼阅读状态信息
+        else if (uri.equals("/updateViewStatus")) {
+            ResponseData response = ReportOpt.updateViewStatus(msg);
+            httpResponse(ctx, msg, response);
+        }
 
         //若尚未消费该事件，则返回false
         else {

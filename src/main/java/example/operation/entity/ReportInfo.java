@@ -18,6 +18,7 @@ public class ReportInfo {
     private List<String> recorder;
     private String timestamp;
     private int status;
+    private int view;
     private String comment;
     private String create_time;
     private String update_time;
@@ -157,6 +158,14 @@ public class ReportInfo {
         this.type = type;
     }
 
+    public int getView() {
+        return view;
+    }
+
+    public void setView(int view) {
+        this.view = view;
+    }
+
     @Override
     public String toString() {
         return "ReportInfo{" +
@@ -170,6 +179,7 @@ public class ReportInfo {
                 ", recorder=" + recorder +
                 ", timestamp='" + timestamp + '\'' +
                 ", status=" + status +
+                ", view=" + view +
                 ", comment='" + comment + '\'' +
                 ", create_time='" + create_time + '\'' +
                 ", update_time='" + update_time + '\'' +

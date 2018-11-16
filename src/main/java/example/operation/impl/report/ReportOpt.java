@@ -144,6 +144,24 @@ public class ReportOpt {
 
 
     /**
+     * PC端异步更新诉讼阅读状态信息
+     * @param msg
+     * @return
+     */
+    public static ResponseData updateViewStatus(Object msg){
+        return CommonService.simpleImplOpt(true, (responseData, sqlSession) -> {
+            //获取报告timestamp消息体
+            String timestamp = FormData.getParam(msg, Common.TIMESTAMP);
+
+            //更新诉讼阅读状态操作
+            int num = sqlSession.update(Mapper.UPDATE_VIEW_STATUS,timestamp);
+            Assemble.responseSuccessSetting(responseData, true);
+        });
+    }
+
+
+
+    /**
      * PC端获取该消息体的图片和声音信息
      * @param msg
      * @return
@@ -151,7 +169,6 @@ public class ReportOpt {
     public static ResponseData getReportImgAndVoiceToPc(Object msg){
         return CommonService.simpleImplOpt(false, (responseData, sqlSession) -> {
             //获取报告timestamp消息体
-            logger.debug("come 1");
             String timestamp = FormData.getParam(msg, Common.TIMESTAMP);
 
             //根据消息体的timestamp获取图片和音频资源
